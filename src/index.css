@@ -1,0 +1,14 @@
+:root {
+    font-family: "Arial", sans-serif;
+    --primary-color: #3b5998;
+    --secondary-color: #8b9dc3;
+    --background-color: #dfe3ee;
+    --nav-menu-size: 35px;
+}
+
+body {
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
