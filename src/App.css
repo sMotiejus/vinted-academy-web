@@ -1,10 +1,5 @@
-.App {
-    padding: calc(var(--nav-menu-size) + 6px) 0 0 0;
-}
-
 .page-block {
-    margin: auto;
-    height: 1400px;
     max-width: 1600px;
+    margin: auto;
+    padding: calc(var(--nav-menu-size) + (var(--nav-menu-vertical-padding) * 2) + 1rem) 1rem 1rem 1rem;
 }
-

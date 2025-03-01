@@ -4,6 +4,7 @@
     --secondary-color: #8b9dc3;
     --background-color: #dfe3ee;
     --nav-menu-size: 35px;
+    --nav-menu-vertical-padding: 3px;
 }
 
 body {

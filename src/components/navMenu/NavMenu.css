@@ -3,7 +3,6 @@
     top: 0;
     left: 0;
     right: 0;
-
     background-color: var(--primary-color);
     color: #fff;
     display: flex;
@@ -11,7 +10,7 @@
     height: var(--nav-menu-size);
     align-items: center;
     justify-content: space-between;
-    padding: 3px 10px;
+    padding: var(--nav-menu-vertical-padding) 10px;
 
     img {
         max-height: 100%;

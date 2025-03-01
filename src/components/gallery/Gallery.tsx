@@ -8,12 +8,12 @@ interface PhotoProps {
 
 const Gallery = ({photos}: PhotoProps) => {
     if (photos.length === 0) {
-        return <h1>No photos fetched.</h1>;
+        return <h1 className={'gallery-heading1'}>No photos fetched.</h1>;
     }
 
     return (
         <div className={'gallery'}>
-            {photos.length > 0 && photos.map((photo: Photo) => <Card key={photo.id} {...photo} />)}
+            {photos.length > 0 && photos.map((photo: Photo, index) => <Card key={index} {...photo} />)}
         </div>
     );
 };

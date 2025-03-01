@@ -2,14 +2,27 @@ import {useEffect, useState} from "react";
 
 import {Photo} from "../models/photo.ts";
 import Gallery from "../components/gallery/Gallery.tsx";
+import InfiniteScrollWrapper from "../components/infiniteScrollWrapper/InfiniteScrollWrapper.tsx";
 
 const HomePage = () => {
 
     const [allPhotos, setAllPhotos] = useState<Photo[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        // Scroll to top if refreshed and you have scrolled
+        window.scrollTo(0, 0);
+        loadMorePhotos()
+    }, []);
+
+    useEffect(() => {
+        setLoading(false);
+    }, [allPhotos]);
+
+    const loadMorePhotos = () => {
+        setLoading(true);
         const photos: Photo[] = [];
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 15; i++) {
             photos.push(
                 {
                     "id": 12345,
@@ -36,13 +49,15 @@ const HomePage = () => {
             )
         }
 
-        setAllPhotos(photos);
-    }, []);
+        setAllPhotos(photosAll => [...photosAll, ...photos]);
+    }
 
     return (
-        <div>
-            <Gallery photos={allPhotos}/>
-        </div>
+        <>
+            <InfiniteScrollWrapper fetching={loading} refetch={loadMorePhotos}>
+                <Gallery photos={allPhotos}/>
+            </InfiniteScrollWrapper>
+        </>
     );
 };
 
