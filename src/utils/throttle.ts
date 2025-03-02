@@ -1,12 +1,10 @@
-export function throttle<T extends (...args: never[]) => void>(mainFunction: T, delay: number) {
-    let timerFlag: number | null = null;
+export function throttle<T extends () => void>(mainFunction: T, delay: number) {
+    let timerFlag: number | undefined;
 
-    return (...args: Parameters<T>) => {
-        if (timerFlag === null) {
-            mainFunction(...args);
-            timerFlag = setTimeout(() => {
-                timerFlag = null;
-            }, delay);
+    return () => {
+        if (!timerFlag) {
+            mainFunction();
+            timerFlag = setTimeout(() => (timerFlag = undefined), delay);
         }
     };
 }

@@ -1,7 +1,86 @@
 .card {
+    position: relative;
+    display: inline-block;
     width: 100%;
     aspect-ratio: 4/3;
-    border: 1px solid black;
     border-radius: 10px;
-    background-color: var(--secondary-color);
+    overflow: hidden;
+
+    /* for div child @container rule https://www.w3schools.com/cssref/atrule_container.php */
+    container-name: cardOverlayContainer;
+    container-type: inline-size;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .card-overlay {
+        background: rgba(0, 0, 0, 0.3);
+        color: #fff;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        gap: 1.5em;
+        align-items: center;
+        /*text-align: center;*/
+
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        padding: 1.25em 1em;
+        box-sizing: border-box;
+
+        transition: opacity 0.4s ease;
+        opacity: 0;
+
+        &:hover {
+            opacity: 1;
+            transition: opacity 0s ease;
+        }
+
+        .information {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5em;
+
+            .divider {
+                width: 60%;
+                border: 2px solid white;
+            }
+        }
+
+        /* It looks almost same as only one clamp()... Took 2 hours of research... */
+        font-size: clamp(1.75em, 5vw + 1em, 2em);
+
+        @container (max-width: 510px) {
+            font-size: clamp(1.6em, 4vw + 1em, 1.75em);
+        }
+
+        @container (max-width: 450px) {
+            font-size: clamp(1.4em, 3vw + 1em, 1.5em);
+        }
+
+        @container (max-width: 400px) {
+            font-size: clamp(1.2em, 2vw + 1em, 1.25em);
+        }
+
+        @container (max-width: 360px) {
+            font-size: clamp(1em, 1.5vw + 1em, 1.1em);
+        }
+
+        @container (max-width: 320px) {
+            font-size: clamp(0.9em, 1.25vw + 1em, 1em);
+        }
+    }
 }
