@@ -1276,10 +1276,13 @@ const FavoritesPage = () => {
 
     const [favoritedPhotos, setFavoritedPhotos] = useState<Photo[]>([]);
 
+    const unfavoritedHandler = (id: number) => {
+        setFavoritedPhotos(favoritedPhotos.filter(photo => photo.id !== id));
+    }
 
     return (
         <>
-            <Gallery photos={favoritedPhotos}/>
+            <Gallery photos={favoritedPhotos} unfavoritedHandler={unfavoritedHandler}/>
         </>
     );
 };

@@ -1,14 +1,29 @@
 import {Photo} from "../../models/photo.ts";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Button from "../button/Button.tsx";
-import {addToArrayInLocalStorage} from "../../utils/localStorage.ts";
+import {
+    addToArrayInLocalStorage,
+    getArrayFromLocalStorage,
+    removeFromArrayInLocalStorage
+} from "../../utils/localStorage.ts";
 import {localStorageFavoritedPhotosKey} from "../../config.ts";
 
 import './Card.css';
 
-const Card = ({photographer, src, alt, id}: Photo) => {
+interface CardProps extends Photo {
+    className?: string;
+    unfavorited?: (id: number) => void
+}
+
+const Card = ({photographer, src, alt, id, className, unfavorited}: CardProps) => {
     const timeoutRef = useRef<number | null>(null);
     const [hovered, setHovered] = useState(false);
+    const [favorite, setFavorite] = useState<boolean>(false);
+
+    useEffect(() => {
+        const favoritedPhotosIds = getArrayFromLocalStorage(localStorageFavoritedPhotosKey);
+        setFavorite(favoritedPhotosIds.includes(id))
+    }, []);
 
     const handleHover = () => {
         if (timeoutRef.current) {
@@ -24,20 +39,29 @@ const Card = ({photographer, src, alt, id}: Photo) => {
         }, 400);
     }
 
+
     return (
-        <div className="card" onMouseEnter={handleHover}>
+        <div className={`card ${className}`} onMouseEnter={handleHover}>
             <img src={src.original} alt={alt ?? "Picture has no alternative"} loading="lazy"/>
             {
                 hovered &&
                 <div className="card-overlay" onMouseLeave={handleHoverOut}>
                     <div className="information">
-                        <div><b>Title</b></div>
+                        <div><b>Photographer</b></div>
                         <div className={"divider"}></div>
                         <div>{photographer}</div>
                     </div>
-                    <Button title={"Favourite"} onClickCallback={() => {
-                        addToArrayInLocalStorage(localStorageFavoritedPhotosKey, id)
-                    }}/>
+                    <Button title={favorite ? "Unfavorite" : "Favourite"}
+                            onClickCallback={() => {
+                                if (favorite) {
+                                    setFavorite(false);
+                                    removeFromArrayInLocalStorage(localStorageFavoritedPhotosKey, id);
+                                    if (unfavorited) unfavorited(id)
+                                } else {
+                                    setFavorite(true);
+                                    addToArrayInLocalStorage(localStorageFavoritedPhotosKey, id)
+                                }
+                            }}/>
                 </div>
             }
         </div>

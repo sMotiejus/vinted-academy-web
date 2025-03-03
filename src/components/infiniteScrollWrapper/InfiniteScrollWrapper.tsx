@@ -12,8 +12,10 @@ interface InfiniteScrollWrapperProps {
 const InfiniteScrollWrapper = ({children, fetching, refetch}: InfiniteScrollWrapperProps) => {
     useEffect(() => {
         const handleScroll = throttle(() => {
-            if (document.documentElement.scrollHeight - window.scrollY - window.innerHeight <
-                window.innerHeight && !fetching) {
+            const scrolledAlmostToBottom =
+                document.documentElement.scrollHeight - window.scrollY - window.innerHeight < window.innerHeight;
+
+            if (scrolledAlmostToBottom && !fetching) {
                 refetch();
             }
         }, 200);
@@ -21,7 +23,6 @@ const InfiniteScrollWrapper = ({children, fetching, refetch}: InfiniteScrollWrap
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
 
     return (
         <div>

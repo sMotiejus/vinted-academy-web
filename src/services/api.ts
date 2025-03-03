@@ -3,8 +3,7 @@ import {PhotoRequest} from "../models/apiRequest.ts";
 
 const apiKey = import.meta.env.VITE_PEXELS_KEY;
 
-
-export const fetchPhotos = async ({page,per_page}:PhotoRequest): Promise<PhotoResponse> => {
+export const fetchPhotos = async ({page, per_page}: PhotoRequest): Promise<PhotoResponse> => {
     let url = "https://api.pexels.com/v1/curated";
 
     if (page || per_page) {
@@ -12,8 +11,6 @@ export const fetchPhotos = async ({page,per_page}:PhotoRequest): Promise<PhotoRe
         if (page) url += `page=${page}`;
         if (per_page) url += (page ? '&' : '') + `per_page=${per_page}`;
     }
-
-
 
     const options = {
         method: "GET",
@@ -26,7 +23,7 @@ export const fetchPhotos = async ({page,per_page}:PhotoRequest): Promise<PhotoRe
     };
 
     try {
-        return await fetch(url,options).then(response => response.json());
+        return await fetch(url, options).then(response => response.json());
     } catch (error) {
         throw new Error("Failed to fetch photos:" + error);
     }
