@@ -9,13 +9,15 @@ import {
 import {localStorageFavoritedPhotosKey} from "../../config.ts";
 
 import './Card.css';
+import NeededImage from "../neededImage/NeededImage.tsx";
 
 interface CardProps extends Photo {
     className?: string;
     unfavorited?: (id: number) => void
+    widthOfCard?: number
 }
 
-const Card = ({photographer, src, alt, id, className, unfavorited}: CardProps) => {
+const Card = ({photographer, src, alt, id, className, unfavorited, widthOfCard, width, height}: CardProps) => {
     const timeoutRef = useRef<number | null>(null);
     const [hovered, setHovered] = useState(false);
     const [favorite, setFavorite] = useState<boolean>(false);
@@ -42,7 +44,10 @@ const Card = ({photographer, src, alt, id, className, unfavorited}: CardProps) =
 
     return (
         <div className={`card ${className}`} onMouseEnter={handleHover}>
-            <img src={src.original} alt={alt ?? "Picture has no alternative"} loading="lazy"/>
+            <NeededImage src={src}
+                         widthOfCard={widthOfCard || 300}
+                         alt={alt ?? "Picture has no alternative"}
+                         width={width} height={height}/>
             {
                 hovered &&
                 <div className="card-overlay" onMouseLeave={handleHoverOut}>
