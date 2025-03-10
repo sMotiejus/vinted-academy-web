@@ -30,7 +30,7 @@ const FavoritesPage = () => {
     }
 
     return (
-        <Gallery photos={favoritedPhotos} unfavoritedHandler={unfavoritedHandler}/>
+        <Gallery photos={favoritedPhotos} unfavoritedHandler={unfavoritedHandler} customText={"No photos favorited"}/>
     );
 };
 

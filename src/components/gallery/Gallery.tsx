@@ -7,10 +7,11 @@ import {throttle} from "../../utils/throttle.ts";
 interface PhotoProps {
     photos: Photo[],
     unfavoritedHandler?: (id: number) => void,
+    customText?: string;
 }
 
 
-const Gallery = ({photos, unfavoritedHandler}: PhotoProps) => {
+const Gallery = ({photos, unfavoritedHandler, customText}: PhotoProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const [itemWidth, setItemWidth] = useState(300);
@@ -31,7 +32,7 @@ const Gallery = ({photos, unfavoritedHandler}: PhotoProps) => {
     }, []);
 
     if (photos.length === 0) {
-        return <h1 className={'gallery-heading1'}>No photos fetched.</h1>;
+        return <h1 className={'gallery-heading1'}>{customText || "No photos fetched."}</h1>;
     }
 
     return (
