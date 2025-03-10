@@ -25,3 +25,7 @@ This repository contains the source code for a frontend photo gallery applicatio
    ```sh
    npm run dev
    ```
+4. Navigate to `http://localhost:5174` to view the app locally
+   
+## Live Demo
+You can check out the live version of the website [here](https://vinted-academy-web.vercel.app/).
