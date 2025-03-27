@@ -2,7 +2,7 @@ import './Gallery.css';
 import {Photo} from "../../models/photo.ts";
 import Card from "../card/Card.tsx";
 import {useEffect, useRef, useState} from "react";
-import {throttle} from "../../utils/throttle.ts";
+import {debounce} from "../../utils/debounce.ts";
 
 interface PhotoProps {
     photos: Photo[],
@@ -17,14 +17,14 @@ const Gallery = ({photos, unfavoritedHandler, customText}: PhotoProps) => {
     const [itemWidth, setItemWidth] = useState(300);
 
     useEffect(() => {
-        const measureHeight = throttle(() => {
+        const measureHeight = debounce(() => {
             if (containerRef.current) {
                 const firstItem = containerRef.current.querySelector(".gallery-item");
                 if (firstItem) {
                     setItemWidth(firstItem.getBoundingClientRect().width);
                 }
             }
-        }, 50);
+        }, 30);
 
         measureHeight();
         window.addEventListener("resize", measureHeight);
